@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  spark-delta:
+    build: .
+    container_name: spark-delta
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: sleep infinity
