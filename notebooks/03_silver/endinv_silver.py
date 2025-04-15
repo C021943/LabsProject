@@ -18,6 +18,7 @@ SELECT
   lower(trim(Description)) AS description,
   lower(trim(City)) AS city,                     
   InventoryId,
+  onHand,
   Brand,
   cast(EndDate as date) as endDate
 FROM EndInv
