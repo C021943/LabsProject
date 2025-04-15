@@ -1,7 +1,7 @@
 # Proyecto Base Labs - Arquitectura de Datos
 
 ## Descripción General
-Este proyecto tiene como objetivo construir una arquitectura de datos local, automatizada y escalable, que simule un Data Lake y que permita extraer, transformar y cargar información desde archivos publicados por PwC. El resultado final es la generación de tablas de negocio que se consumen en tableros visuales en Sigma.
+Este proyecto tiene como objetivo construir una arquitectura de datos local, automatizada y escalable, que simule un Data Lake local y que permita extraer, transformar y cargar información desde archivos publicados por PwC. El resultado final es la generación de tablas de negocio que se consumen en tableros visuales en Sigma.
 
 ## Requisitos
 - Python 3 y Visual Studio Code
