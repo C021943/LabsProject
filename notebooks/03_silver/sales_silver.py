@@ -35,18 +35,8 @@ silver_path = "./datalake/silver/Sales"
 
 from delta.tables import DeltaTable
 import os
-#UPSERT
-if not os.path.exists(silver_path):
-    df_cleaned.write.format("delta").mode("overwrite").save(silver_path)
-else:
-    silver_table = DeltaTable.forPath(spark, silver_path)
-    silver_table.alias("target").merge(
-        df_cleaned.alias("source"),
-        """
-        target.inventory_id = source.inventory_id
-        AND target.sales_date = source.sales_date
-        AND target.sales_dollars = source.sales_dollars
-        AND target.description = source.description
-        AND target.vendorname = source.vendorname
-        """
-    ).whenMatchedUpdateAll().whenNotMatchedInsertAll().execute()
+
+os.makedirs(silver_path, exist_ok=True)
+
+#overwrite
+df_cleaned.write.format("delta").mode("overwrite").save(silver_path)
