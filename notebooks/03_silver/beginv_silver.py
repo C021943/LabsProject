@@ -18,6 +18,7 @@ SELECT
   lower(trim(Description)) AS description,
   lower(trim(regexp_replace(City, '[^a-zA-Z0-9 ]', ''))) AS city,                     
   InventoryId,
+  onHnad,
   Brand,
   cast(StartDate as date) as StartDate
 FROM BegInv
