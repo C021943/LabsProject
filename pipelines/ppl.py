@@ -34,11 +34,15 @@ scripts_silver = [
 # GOLD
 scripts_gold = [
     "notebooks/04_gold/marginsprofits_gold.py",
-    "notebooks/04_gold/rotation_gold.py"
+    "notebooks/04_gold/rotation_gold.py",
+    "notebooks/04_gold/marginsprofitsbrand_gold.py"
 ]
 
 # POSTGRES
-script_postgres = "notebooks/05_postgres/marginsprofits_postgres.py"
+script_postgres = [
+     "notebooks/05_postgres/marginsprofits_postgres.py",
+     "notebooks/05_postgres/marginsprofitsbrand_postgres.py"
+]
 
 # Ejecución BRONZE
 print("✅✅✅✅✅✅ PROCESO BRONZE ✅✅✅✅✅✅")
@@ -60,7 +64,9 @@ for script in scripts_gold:
 
 # Ejecución POSTGRES
 print("✅✅✅✅✅✅ PROCESO POSTGRES ✅✅✅✅✅✅")
-print(f">>> {script_postgres}")
-subprocess.run(base_command + [script_postgres], check=True)
+for script in script_postgres:
+    print(f">>> {script}")
+    subprocess.run(base_command + [script], check=True)
 
 print("✅✅✅✅✅✅ PROCESO COMPLETO ✅✅✅✅✅✅")
+
