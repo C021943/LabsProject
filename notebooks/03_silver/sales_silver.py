@@ -17,7 +17,7 @@ SELECT
   lower(trim(Description)) AS description,
   lower(trim(VendorName)) AS vendorname,
   InventoryId,
-  Brand,
+  cast(Brand as string) as brand,
   cast(SalesDollars as double) as SalesDollars,
   cast(SalesQuantity as double) as SalesQuantity,
   cast(SalesPrice as double) as SalesPrice,
