@@ -10,9 +10,9 @@ spark = SparkSession.builder \
 bronze_path = "./datalake/bronze/EndInv"
 spark.read.format("delta").load(bronze_path).createOrReplaceTempView("EndInv")
 
-# limpiamos los datos
-#normalizamos description y city
-#sacamos las filas con nulos porque no sirven para el analisis
+# Data cleansing
+#normalize description and city
+#Let's discard rows with nulls in key columns
 df_cleaned = spark.sql("""
 SELECT 
   lower(trim(Description)) AS description,
