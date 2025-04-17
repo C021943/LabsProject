@@ -9,7 +9,7 @@ spark = SparkSession.builder \
 
 INPUT_FOLDER = "./datalake/prelanding/EndInv"
 OUTPUT_FOLDER = "./datalake/bronze/EndInv"
-#basicamente tomamos la info de la prelanding cruda la convertimos en delta y guardamos en la zona bronze
+#Basically, raw data from prelanding is taking and then converted and saved as Delta tables in Bronze layer
 
 try:
     df = spark.read.option("header", True).csv(INPUT_FOLDER)
