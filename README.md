@@ -1,4 +1,4 @@
-# Proyecto Base Labs - Arquitectura de Datos
+#  Base Labs Project - Architecture of the DataFlow
 
 ## Overview
 This project aims to build a local, automated, and scalable data architecture that simulates a local Data Lake and allows to extract, transform, and load data from files published by PwC. The final result is the generation of business tables that are consumed in visual dashboards in PowerBI.
