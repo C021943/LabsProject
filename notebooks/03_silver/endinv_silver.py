@@ -6,7 +6,7 @@ spark = SparkSession.builder \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
     .getOrCreate()
 
-# cargamos la delta y la abrimos con vista temporal
+# Let's load delta table and open as a temporal view
 bronze_path = "./datalake/bronze/EndInv"
 spark.read.format("delta").load(bronze_path).createOrReplaceTempView("EndInv")
 
@@ -28,10 +28,10 @@ WHERE EndDate IS NOT NULL
 
 """)
 
-# Ruta de la tabla Silver
+# Silver path
 silver_path = "./datalake/silver/EndInv"
 
-# Si no existe la tabla Silver, la creamos
+# if silver path doesnt exist, let's create it
 from delta.tables import DeltaTable
 import os
 
