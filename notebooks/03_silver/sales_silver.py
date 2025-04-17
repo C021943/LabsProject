@@ -6,12 +6,12 @@ spark = SparkSession.builder \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
     .getOrCreate()
 
-# cargamos la delta y la abrimos con vista temporal
+# loading delta table
 bronze_path = "./datalake/bronze/Sales"
 spark.read.format("delta").load(bronze_path).createOrReplaceTempView("Sales")
-# limpiamos los datos
-#normalizamos description y city
-#sacamos las filas con nulos porque no sirven para el analisis
+# data cleansing
+#normalize description y city
+#let's discard rows with nulls in key columns
 df_cleaned = spark.sql("""
 SELECT 
   lower(trim(Description)) AS description,
@@ -30,7 +30,7 @@ WHERE SalesPrice IS NOT NULL
 
 """)
 
-# Ruta de la tabla Silver
+# Silver path
 silver_path = "./datalake/silver/Sales"
 
 from delta.tables import DeltaTable
