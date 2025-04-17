@@ -6,13 +6,13 @@ spark = SparkSession.builder \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
     .getOrCreate()
 
-# cargamos la delta y la abrimos con vista temporal
+# Let's load delta table and open as a temporal view
 bronze_path = "./datalake/bronze/BegInv"
 spark.read.format("delta").load(bronze_path).createOrReplaceTempView("BegInv")
 
-# limpiamos los datos
-#normalizamos description y city
-#sacamos las filas con nulos porque no sirven para el analisis
+# Data cleansing
+#normalize description and city
+#Let's discard rows with nulls in key columns
 df_cleaned = spark.sql("""
 SELECT 
   lower(trim(Description)) AS description,
@@ -28,13 +28,13 @@ WHERE StartDate IS NOT NULL
 
 """)
 
-# Ruta de la tabla Silver
+#  Silver path
 silver_path = "./datalake/silver/BegInv"
 
-# Si no existe la tabla Silver, la creamos
+# If it doesn't existe, lets creat it
 from delta.tables import DeltaTable
 import os
-#hacemos un upsert
+#upsert
 if not os.path.exists(silver_path):
     df_cleaned.write.format("delta").mode("overwrite").save(silver_path)
 else:
