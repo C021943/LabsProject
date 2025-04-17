@@ -1,10 +1,10 @@
 import subprocess
 
-# ejecutamos el script de prelanding (corre fuera del contenedor)
+# Prelanding script (Out of the container)
 print("Ejecutando Template_Ingestion.py local...")
 subprocess.run(["python", "notebooks/01_prelanding/Template_Ingestion.py"], check=True)
 
-# comando base para que corra dentro del contenedor
+# Base comand to run inside the container
 base_command = [
     "docker", "exec", "spark-delta",
     "spark-submit",
@@ -44,29 +44,29 @@ script_postgres = [
      "notebooks/05_postgres/marginsprofitsbrand_postgres.py"
 ]
 
-# Ejecución BRONZE
-print("✅✅✅✅✅✅ PROCESO BRONZE ✅✅✅✅✅✅")
+# BRONZE execution
+print("✅✅✅✅✅✅  BRONZE PROCESS ✅✅✅✅✅✅")
 for script in scripts_bronze:
     print(f">>> {script}")
     subprocess.run(base_command + [script], check=True)
 
-# Ejecución SILVER
-print("✅✅✅✅✅✅ PROCESO SILVER ✅✅✅✅✅✅")
+#  SILVER execution
+print("✅✅✅✅✅✅  SILVER PROCESS ✅✅✅✅✅✅")
 for script in scripts_silver:
     print(f">>> {script}")
     subprocess.run(base_command + [script], check=True)
 
-# Ejecución GOLD
-print("✅✅✅✅✅✅ PROCESO GOLD ✅✅✅✅✅✅")
+#  GOLD execution
+print("✅✅✅✅✅✅  GOLD PROCESS ✅✅✅✅✅✅")
 for script in scripts_gold:
     print(f">>> {script}")
     subprocess.run(base_command + [script], check=True)
 
-# Ejecución POSTGRES
-print("✅✅✅✅✅✅ PROCESO POSTGRES ✅✅✅✅✅✅")
+#  POSTGRES execution
+print("✅✅✅✅✅✅  POSTGRESQL PROCESS ✅✅✅✅✅✅")
 for script in script_postgres:
     print(f">>> {script}")
     subprocess.run(base_command + [script], check=True)
 
-print("✅✅✅✅✅✅ PROCESO COMPLETO ✅✅✅✅✅✅")
+print("✅✅✅✅✅✅  COMPLETO PROCESS ✅✅✅✅✅✅")
 
