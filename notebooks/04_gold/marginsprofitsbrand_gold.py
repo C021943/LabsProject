@@ -6,13 +6,13 @@ spark = SparkSession.builder \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
     .getOrCreate()
 
-# tablas de la capa silver
+# Tables from silver layer
 df_sales = spark.read.format("delta").load("./datalake/silver/Sales")
 df_purchase = spark.read.format("delta").load("./datalake/silver/PurchasesFINAL")
 df_sales.createOrReplaceTempView("Sales")
 df_purchase.createOrReplaceTempView("purchases")
 
-# total compras por vendor y producto
+# Total purchases per brand and vendor
 spark.sql("""
     SELECT
       trim(VendorName) as vendorname,
@@ -22,7 +22,7 @@ spark.sql("""
     GROUP BY trim(VendorName),
              trim(brand)""").createOrReplaceTempView('Total_purchases')
 
-# total ventas por vendor y producto, incluyendo el tax
+# Total sells per vendr and brand
 spark.sql("""
     SELECT
       trim(VendorName) as vendorname,
@@ -51,5 +51,5 @@ df_final = spark.sql("""
         
 """)
 df_final.show()
-#guardado
+#saving
 df_final.write.format("delta").mode("overwrite").save("./datalake/gold/MarginsProfitsBrand")
