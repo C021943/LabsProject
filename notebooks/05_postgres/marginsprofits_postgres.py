@@ -5,14 +5,14 @@ spark = SparkSession.builder \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
     .getOrCreate()
 
-# levantamos la tabla delta de gold
+# gold tables loading
 delta_table_path = "./datalake/gold/MarginsProfits"
 df = spark.read.format("delta").load(delta_table_path)
 
-# display para verificar lo que enviamos
+# display to show what are we sending
 df.show()
 
-#configuración
+#Setting of jdbc
 jdbc_url = "jdbc:postgresql://shuttle.proxy.rlwy.net:19123/railway"
 properties = {
     "user": "postgres",
@@ -20,12 +20,12 @@ properties = {
     "driver": "org.postgresql.Driver"
 }
 
-#escritura en postgres
+#postgresql writting
 df.write \
     .jdbc(
         url=jdbc_url,
         table="margins_profits",
-        mode="overwrite",  # o "append" si querés mantener lo anterior
+        mode="overwrite", 
         properties=properties
     )
 
